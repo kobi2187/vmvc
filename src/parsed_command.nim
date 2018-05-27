@@ -1,17 +1,15 @@
 import tables
+import response, err_type
+# import err_type
 
-type ErrorType* {.pure.} = enum
-  None, Uninitialized, Parse, Validation, IO, UnknownCommand, UnknownSubCommand, UnknownConfigKeys, BadValue,ValueNotInRange
-
-type Response* = tuple[ok:bool, why:string, error:ErrorType]
-proc ok*:Response = (true, "",ErrorType.None)
 
 type ParsedCommand* = object
-  command : string
-  subCommands : seq[string] #not nil
-  arguments : TableRef[string,string]
-  error: Response
+  command* : string
+  subCommands* : seq[string] #not nil
+  arguments* : TableRef[string,string]
+  error*: Response
   id : string #make it read only. How?
+proc id*(p:ParsedCommand):string = p.id
 
 proc asError*(why: string) : ParsedCommand =
   result.error=(false,why,ErrorType.Validation)
@@ -23,9 +21,10 @@ proc isOnlyCmd*(p:ParsedCommand) : bool = (not p.hasSubCmds() and not p.hasArgs(
   
 import uuids
 
-proc initParsedCommand*(cmd:string; sub:seq[string] = @[]; args:TableRef[string,string] = newTable[string,string]()) : ParsedCommand =
+proc makeParsedCommand*(cmd:string; sub:seq[string] = @[]; args:TableRef[string,string] = newTable[string,string]()) : ParsedCommand =
+  
   result.error = ok()
   result.id = $genUUID()
   result.command = cmd;
-  result.subCommands = if sub.isNil: @[] else: sub
-  result.arguments = if args.isNil: newTable[string,string]() else: args
+  result.subCommands = sub # if sub.isNil: @[] else: sub
+  result.arguments = args #if args.isNil: newTable[string,string]() else: args

@@ -1,12 +1,12 @@
-# view will get a json object.
+# view will get a json object. (JsonNode ?)
 # [v] regex lib has captured groups
 # feature set can be set of enum, but maybe have that as optional mixins (or decorators) that the user can peruse.
 # implement the classes - don't think about interface specs right now.
 # do concepts where user has to build his own, but not in the internal system.
 # parts enum can be a set of strings. although view and controller should have the exact same strings (which is why a compiled enum prevented spelling mistakes) perhaps we can find a way to initialize or validate this, or even just trust the user that it'll work. maybe a test by the controller that every part updates itself... i don't know. we'll see later. for now, set[string]
 
-import parsed_command
-{.experimental: "notnil".}
+import parsed_command, response
+# {.experimental: "notnil".}
 import json, tables, sets
 
 type SimpleData* = tuple[part:string, data:JsonNode]

@@ -1,0 +1,5 @@
+.git
+.*\.c
+.*\.o
+.*\.exe
+/nimcache/

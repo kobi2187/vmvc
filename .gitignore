@@ -16,6 +16,6 @@
 # Ignore `bin` dirs
 .hg/
 bin/
-src/nimcache
+*/nimcache/*
 # or
 */bin/*

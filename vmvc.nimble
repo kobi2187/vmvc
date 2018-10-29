@@ -9,3 +9,4 @@ srcDir        = "src"
 # Dependencies
 
 requires "nim >= 0.18.1"
+requires "uuids >= 0.1.10", "regex >= 0.10.0"

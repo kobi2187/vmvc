@@ -1,4 +1,3 @@
-
 # view will get a json object. (JsonNode ?)
 # [v] regex lib has captured groups
 # feature set can be set of enum, but maybe have that as optional mixins (or decorators) that the user can peruse.
@@ -9,7 +8,12 @@
 
 
 
-import parsed_command, response
+
+
+
+
+
+import libvmvc/[parsed_command, response]
 # {.experimental: "notnil".}
 import json, tables, sets
 

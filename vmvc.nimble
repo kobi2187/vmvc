@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.0.1"
 author        = "Kobi Lurie"
 description   = "a framework for handling complexity by having a \"middle-man\" focal point to handle user interactions - a variant of the mvc/dci concept"
 license       = "MIT"

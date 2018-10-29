@@ -1,5 +1,5 @@
 import unittest, tables
-import "../src/parsing_utils"
+import libvmvc/parsing_utils
 
 suite "parsing utils":
   echo "starting"

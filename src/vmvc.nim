@@ -1,11 +1,10 @@
 
-# view will get a json object. (JsonNode ?)
-# [v] regex lib has captured groups
-# feature set can be set of enum, but maybe have that as optional mixins (or decorators) that the user can peruse.
-# implement the classes - don't think about interface specs right now.
-# do concepts where user has to build his own, but not in the internal system.
-# parts enum can be a set of strings. although view and controller should have the exact same strings (which is why a compiled enum prevented spelling mistakes) perhaps we can find a way to initialize or validate this, or even just trust the user that it'll work. maybe a test by the controller that every part updates itself... i don't know. we'll see later. for now, set[string]
-
+# view will get a json object. (JsonNode ?), instead of arbitrary format as in original version.
+# TODO(FUTURE):feature set can be set of enum, but maybe have that as optional mixins (or decorators) that the user can peruse.
+# TODO(FUTURE): can we pass the user provided "parts" enum? or is it just a set of strings? prefer compile time checking.
+# TODO(FUTURE): need to port the generic view code as well, for command line, test, and gui.
+# TODO(FUTURE): provide the controller features, such as log, replay, profiler, etc, that "sit" in the controller focal point.
+# TODO(FUTURE): make some samples, show how it's intended to be used.
 
 
 
@@ -16,14 +15,13 @@
 
 
 import vmvc/[parsed_command, response]
-# {.experimental: "notnil".}
 import json, tables, sets
 
 type SimpleData* = tuple[part: string, data: JsonNode]
 
 
 type IModel* = concept domain
-  domain.make_simple_data() is JsonNode
+  domain.make_simple_data(): JsonNode
 
 type IView* = concept view
   view.setupUi()
@@ -56,7 +54,7 @@ type IControllerSpec* = concept c
   c.attachView(v1: IView)
   c.detachView(v1: IView)
 
-  var roles: seq[IRole]
+  var roles: set[IRole]
 
   c.notifyViews(note: string)
   c.sendErrToViews(err: Response)

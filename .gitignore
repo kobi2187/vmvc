@@ -15,6 +15,7 @@
 
 # Ignore `bin` dirs
 .hg/
+.vscode/
 bin/
 */nimcache/*
 # or

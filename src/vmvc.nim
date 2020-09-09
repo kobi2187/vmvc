@@ -14,31 +14,27 @@
 
 
 
-import vmvc/[parsed_command, response]
+import vmvc/[parsed_command, response, simplified_data]
 import json, tables, sets
-
-type SimpleData* = tuple[part: string, data: JsonNode]
-
 
 type IModel* = concept domain
   domain.make_simple_data(): JsonNode
 
 type IView* = concept view
   view.setupUi()
-  view.redrawAll(drawing_data: seq[SimpleData]) # screen_part, format
-  view.redrawPart(data: SimpleData)
+  view.redrawAll(drawing_data: seq[SimplifiedData]) # screen_part, format
+  view.redrawPart(data: SimplifiedData)
   view.requestUpdate()
   view.notify(note: string)
   view.start()
   view.showErr(resp: Response)
   view.doExit()
 
-# api for view
+# api for controller
 type IController* = concept c
   c.requestReload*()
   c.requestPartialReload*(part: string)
   c.load()
-  c.performAction(cmd: string): Response
 
 
 type IRole* = concept role
@@ -50,6 +46,7 @@ type IControllerSpec* = concept c
   c.beforeAction(cmd_and_args: ParsedCommand)
   c.customAction(cmd_and_args: ParsedCommand): Response
   c.afterAction(cmd_and_args: ParsedCommand)
+  c.performAction(cmd: string): Response
 
   c.attachView(v1: IView)
   c.detachView(v1: IView)
@@ -59,7 +56,7 @@ type IControllerSpec* = concept c
   c.notifyViews(note: string)
   c.sendErrToViews(err: Response)
   c.updateViews()
-  c.updateViewPart(v1: IView, data: SimpleData)
-  c.getDataForPart(part: string): SimpleData # may create later a Part enum and move it as generic parameter. (in concept declaration)
+  c.updateViewPart(v1: IView, data: SimplifiedData)
+  c.getDataForPart(part: string): SimplifiedData # may create later a Part enum and move it as generic parameter. (in concept declaration)
   c.doSaveState()
 

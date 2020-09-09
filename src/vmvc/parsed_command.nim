@@ -5,7 +5,7 @@ import response, err_type
 
 type ParsedCommand* = object
   command*: string
-  subCommands*: seq[string]   #not nil
+  subCommands*: seq[string] #not nil
   arguments*: TableRef[string, string]
   error*: Response
   id: string
@@ -13,7 +13,7 @@ type ParsedCommand* = object
 proc id*(p: ParsedCommand): string = p.id
 
 proc asError*(why: string): ParsedCommand =
-  result.error = (false, why, ErrorType.Validation)
+  result.error = newResponse(false, why, ErrorType.Validation)
 
 proc hasArgs*(p: ParsedCommand): bool = (p.arguments.len > 0)
 proc hasSubCmds*(p: ParsedCommand): bool = (p.subCommands.len > 0)
